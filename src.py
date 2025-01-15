@@ -1,6 +1,10 @@
 from PIL import Image
+# from cryptography.fernet import Fernet
 
-def encode_text_in_image(image_path, output_image_path, text):
+def encode_text_in_image():
+    global text
+    global image_path
+    global output_path
     image = Image.open(image_path)
     
     # Convert the text message into binary
@@ -29,10 +33,11 @@ def encode_text_in_image(image_path, output_image_path, text):
             pixels[x, y] = tuple(pixel)
     
     # Save image to a new file
-    image.save(output_image_path)
+    image.save(output_path)
     print("Text encoded successfully!")
 
-def decode_text_from_image(image_path):
+def decode_text_from_image():
+    global image_path
     image = Image.open(image_path)
     pixels = image.load()
     width, height = image.size
@@ -54,7 +59,7 @@ def decode_text_from_image(image_path):
 
 choice = input("Do you want to encode or decode? (en/de) --> ")
 
-# Checks for incorect values
+# Checks for incorrect values
 if choice != "en" and choice != "de":
     false_input = True
     while false_input:
@@ -67,7 +72,7 @@ if choice == "en": # Encryption
     image_path = input("Give path to image --> ")
     output_path = input("Give the export path --> ")
 
-    # Ask if you want to add a secret file to the imge
+    # Ask if you want to add a secret file to the image
     choice = input("Do you have the message in a text file? (y/n) --> ")
     
     # Checks for wrong answers
@@ -87,16 +92,16 @@ if choice == "en": # Encryption
     elif choice == 'n':
         text = input("Give secret message --> ")
     else: # Again an error check
-        print("An error occured")
+        print("An error occurred")
 
     print("Working on it...")
-    encode_text_in_image(image_path, output_path, text)
+    encode_text_in_image()
 
-elif choice == "de": # Decription
+elif choice == "de": # Decryption
     image_path = input("Give image path --> ")
     print("Working on it...")
-    message = decode_text_from_image(image_path)
+    message = decode_text_from_image()
     print(f"The message is: {message}")
 
 else: # Just in case
-    print("An error occured")
+    print("An error occurred")
